@@ -11,9 +11,10 @@
   },
   "tasks": {
     "coverage": "deno task -q test; deno task -q coverage:lcov; deno task -q coverage:report",
+    "coverage:clean": "deno run --allow-read --allow-write .scripts/coverage/clean.ts",
     "coverage:report": "deno coverage .coverage",
     "coverage:lcov": "deno coverage .coverage --lcov --output=.coverage/lcov.info",
     "githooks": "git config core.hooksPath .githooks",
-    "test": "deno test --coverage=.coverage -q --allow-read"
+    "test": "deno task -q coverage:clean; deno test --coverage=.coverage -q --allow-read"
   }
 }
