@@ -1,4 +1,14 @@
 {
+  "fmt": {
+    "files": {
+      "exclude": ["coverage"]
+    }
+  },
+  "lint": {
+    "files": {
+      "exclude": ["coverage"]
+    }
+  },
   "tasks": {
     "coverage": "deno task -q test; deno task -q coverage:lcov; deno task -q coverage:report",
     "coverage:report": "deno coverage coverage",
