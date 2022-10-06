@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "coverage": "deno task -q test; deno task -q coverage:lcov; deno task -q coverage:report",
+    "coverage:report": "deno coverage coverage",
+    "coverage:lcov": "deno coverage coverage --lcov --output=coverage/lcov.info",
+    "test": "deno test --coverage=coverage -q --allow-read"
+  }
+}
