@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Ensures the commit message follows a subset of conventional commits.
+
+# Read the commit message from the file.
+message=$(<"$1")
+
+# Ensure the commit message matches the regular expression.
+pattern='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z]+\))?!?: [a-z]'
+if [[ ! $message =~ $pattern ]]; then
+  echo "Commit message does not match conventional commit format."
+  exit 1
+fi

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Ensures the staged files are formatted and linted.
+
+# Exit if any of the following commands fail.
+set -e
+
+# Save the working tree to restore later by stashing it and immeidately applying
+# the stash entry.
+git stash push -qu -m 'qu' > /dev/null
+git stash apply --index -q > /dev/null
+
+# Remove all changes that are not staged by stashing them then immediately
+# dropping the stash entry.
+git stash push -kqu -m 'kqu' > /dev/null
+git stash drop -q > /dev/null
+
+# Don't exit if any of the following commands fail.
+set +e
+
+# Check if any staged files need to be formatted.
+deno fmt --check -q
+fmt_code=$?
+if [ $fmt_code -ne 0 ]; then
+  # If there are files that need to be formatted, run the formatter without the
+  # -q argument to report those files.
+  deno fmt --check
+  fmt_code=$?
+fi
+
+# Lint the staged files. The -q argument will still list files that need to be
+# fixed.
+deno lint -q
+lint_code=$?
+
+# Restore the working tree by resetting it and then popping the stash made at
+# the start.
+git reset --hard -q > /dev/null
+git stash pop --index -q > /dev/null
+
+# Exit with a non-zero exit code if the formatter or linter did.
+code=$((fmt_code || lint_code))
+exit $code
