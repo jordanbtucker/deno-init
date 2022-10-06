@@ -1,19 +1,19 @@
 {
   "fmt": {
     "files": {
-      "exclude": ["coverage"]
+      "exclude": [".coverage"]
     }
   },
   "lint": {
     "files": {
-      "exclude": ["coverage"]
+      "exclude": [".coverage"]
     }
   },
   "tasks": {
     "coverage": "deno task -q test; deno task -q coverage:lcov; deno task -q coverage:report",
-    "coverage:report": "deno coverage coverage",
-    "coverage:lcov": "deno coverage coverage --lcov --output=coverage/lcov.info",
+    "coverage:report": "deno coverage .coverage",
+    "coverage:lcov": "deno coverage .coverage --lcov --output=.coverage/lcov.info",
     "githooks": "git config core.hooksPath .githooks",
-    "test": "deno test --coverage=coverage -q --allow-read"
+    "test": "deno test --coverage=.coverage -q --allow-read"
   }
 }
